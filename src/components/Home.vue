@@ -15,16 +15,17 @@
     </el-header>
     <el-main>
       <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
-        <el-menu-item index="1">客户管理</el-menu-item>
-        <el-menu-item index="2">收费管理</el-menu-item>
-        <el-menu-item index="3">清欠管理</el-menu-item>
-        <el-menu-item index="4"><a href="https://www.ele.me" target="_blank">变更管理</a></el-menu-item>
-        <el-menu-item index="5">减免折让</el-menu-item>
+        <el-menu-item index="1">功能示意图</el-menu-item>
+        <el-menu-item index="2">客户管理</el-menu-item>
+        <el-menu-item index="3">收费管理</el-menu-item>
+        <el-menu-item index="4">清欠管理</el-menu-item>
+        <el-menu-item index="5"><a href="https://www.ele.me" target="_blank">变更管理</a></el-menu-item>
+        <el-menu-item index="6">减免折让</el-menu-item>
       </el-menu>
 
       <el-carousel :interval="4000" type="card" height="300px">
-        <el-carousel-item :key="index" v-for="(src,index) in img">
-          <img :src="src" alt="">
+        <el-carousel-item  v-for="item in img" :key="item.pic">
+          <img :src="item.src" alt="">
         </el-carousel-item>
       </el-carousel>
     </el-main>
@@ -38,12 +39,10 @@
       return {
         name: '你好',
         activeIndex: '1',
-        activeIndex2: '1',
         img: [
-          "src/assets/1.jpg",
-          "src/assets/1.jpg",
-          "src/assets/1.jpg",
-          "src/assets/1.jpg"
+          {'pic':'01','src':require('../assets/1.jpg')},
+          {'pic':'02','src':require('../assets/1.jpg')},
+          {'pic':'03','src':require('../assets/1.jpg')}
         ]
       }
     },
