@@ -24,7 +24,7 @@
       </el-menu>
 
       <el-carousel :interval="4000" type="card" height="300px">
-        <el-carousel-item  v-for="item in img" :key="item.pic">
+        <el-carousel-item v-for="item in img" :key="item.pic">
           <img :src="item.src" alt="">
         </el-carousel-item>
       </el-carousel>
@@ -40,9 +40,9 @@
         name: '你好',
         activeIndex: '1',
         img: [
-          {'pic':'01','src':require('../assets/1.jpg')},
-          {'pic':'02','src':require('../assets/1.jpg')},
-          {'pic':'03','src':require('../assets/1.jpg')}
+          {'pic': '01', 'src': require('../assets/1.jpg')},
+          {'pic': '02', 'src': require('../assets/1.jpg')},
+          {'pic': '03', 'src': require('../assets/1.jpg')}
         ]
       }
     },
@@ -54,9 +54,10 @@
   }
 </script>
 <style scoped>
-  a{
+  a {
     text-decoration: none;
   }
+
   .el-carousel {
     overflow: hidden;
     width: 960px;
@@ -81,6 +82,7 @@
   .el-carousel__item:nth-child(2n+1) {
     background-color: #d3dce6;
   }
+
   .el-carousel__item img {
     position: absolute;
     top: 0;
