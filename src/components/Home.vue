@@ -1,45 +1,30 @@
 <template>
-  <el-container>
-    <el-header>
-      供暖收费管理系统
-      <div class="header-info">
-        <div v-if="flag">
-          <span>{{name}}已登录</span>
-          <a @click ='layout'>退出登陆</a>
-          <!-- <router-link to="/Login">退出登陆</router-link> -->
-        </div>
-        <div v-else>
-          <span>未登录</span>
-          <a>请先登陆</a>
-        </div>
-      </div>
-    </el-header>
-    <el-main>
-      <v-nav></v-nav>
-      <el-carousel :interval="4000" type="card" height="300px">
-        <el-carousel-item v-for="item in img" :key="item.pic">
-          <img :src="item.src" alt="">
-        </el-carousel-item>
-      </el-carousel>
-    </el-main>
-    <el-footer>版权所有权@杨昊东</el-footer>
-  </el-container>
+  <div>
+    <v-home></v-home>
+    <v-nav></v-nav>
+    <v-footer></v-footer>
+  </div>
 </template>
 <script>
-import nav from './Nav'
+
+  import Home from './Header'
+  import Nav from './Nav'
+  import Footer from './Footer'
   export default {
     created() {
       console.log(localStorage.username);
-         if(localStorage.username) {
-            this.name = localStorage.username;
-            this.flag = true;
-         } else {
-            this.flag = false;
-         }
+      if (localStorage.username) {
+        this.name = localStorage.username;
+        this.flag = true;
+      } else {
+        this.flag = false;
+      }
     },
-    components:{
-          'v-nav': nav
-      },
+    components: {
+      'v-nav': Nav,
+      'v-home': Home,
+      'v-footer': Footer,
+    },
     data() {
       return {
         name: '你好',
@@ -56,11 +41,11 @@ import nav from './Nav'
       handleSelect(key, keyPath) {
         console.log(key, keyPath);
       },
-      layout: function() {
+      layout: function () {
         localStorage.clear();
         this.$router.push('./login');
-      } 
-     }
+      }
+    }
   }
 </script>
 <style scoped>
@@ -73,7 +58,7 @@ import nav from './Nav'
     width: 960px;
     margin: 0 auto;
     padding-top: 100px;
-    min-height: 350px;
+    min-height: 500px;
     /*background: #324057;*/
   }
 
