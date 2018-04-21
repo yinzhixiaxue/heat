@@ -1,55 +1,48 @@
 <template>
-  <el-container>
-    <el-header>
-      供暖收费管理系统
-      <div class="header-info">
-        <div v-if="flag">
-          <span>{{name}}已登录</span>
-          <a @click ='layout'>退出登陆</a>
-          <!-- <router-link to="/Login">退出登陆</router-link> -->
-        </div>
-        <div v-else>
-          <span>未登录</span>
-          <a>请先登陆</a>
-        </div>
-      </div>
-    </el-header>
-    <el-main>
-      <v-nav></v-nav>
-      <el-carousel :interval="4000" type="card" height="300px">
-        <el-carousel-item v-for="item in img" :key="item.pic">
-          <img :src="item.src" alt="">
-        </el-carousel-item>
-      </el-carousel>
-    </el-main>
-    <el-footer>版权所有权@杨昊东</el-footer>
-  </el-container>
+	<div>
+	  <el-container>
+	    <el-header>
+	      供暖收费管理系统
+	      <div class="header-info">
+	        <div v-if="true">
+	          <span>{{name}}已登录</span>
+	          <a @click ='layout'>退出登陆</a>
+	          <!-- <router-link to="/Login">退出登陆</router-link> -->
+	        </div>
+	        <div v-else>
+	          <span>未登录</span>
+	          <a>请先登陆</a>
+	        </div>
+	      </div>
+	    </el-header>
+	    <v-nav></v-nav>
+	    <el-button type="text" @click="centerDialogVisible = true">新建用户</el-button>
+
+		<el-dialog
+		  title="请完善用户信息"
+		  :visible.sync="centerDialogVisible"
+		  width="50%"
+		  center>
+		  <!-- <span>需要注意的是内容是默认不居中的</span> -->
+		  
+		  <span slot="footer" class="dialog-footer">
+		    <el-button @click="centerDialogVisible = false">取 消</el-button>
+		    <el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
+		  </span>
+		</el-dialog>
+	  </el-container>
+	</div>
 </template>
 <script>
 import nav from './Nav'
   export default {
-    created() {
-      console.log(localStorage.username);
-         if(localStorage.username) {
-            this.name = localStorage.username;
-            this.flag = true;
-         } else {
-            this.flag = false;
-         }
-    },
     components:{
           'v-nav': nav
       },
     data() {
       return {
         name: '你好',
-        flag: false,
-        // activeIndex: '1',
-        img: [
-          {'pic': '01', 'src': require('../assets/1.jpg')},
-          {'pic': '02', 'src': require('../assets/1.jpg')},
-          {'pic': '03', 'src': require('../assets/1.jpg')}
-        ]
+        centerDialogVisible: false
       }
     },
     methods: {

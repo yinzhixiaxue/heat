@@ -1,12 +1,10 @@
 <template>
     <div class="wrap">
         <el-row>
-            <!-- <el-col :span="16"><img src="../assets/main.jpg" alt="" class="index-img"></el-col> -->
-            <!-- <img src="../assets/login_bg.png" alt="" class="index-img"> -->
             <div class="index-img">
               <el-col :span="8" class="content-right">
                 <h1 class="title">欢迎登录供暖管理系统</h1>
-                <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px" class="demo-ruleForm" action="http://127.0.0.1:80/heat/welcome/login" method="post">
+                <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px" class="demo-ruleForm" action="http://127.0.0.1:80/heatphp/welcome/login" method="post">
                     <el-form-item label="用户名" prop="username">
                         <el-input type="text" v-model="ruleForm2.username" auto-complete="off" name="username"></el-input>
                     </el-form-item>
@@ -39,6 +37,9 @@
 <script>
 import Axios from 'axios';
     export default {
+        created() {
+            console.log(localStorage);
+        },
         data() {
           var validatePass = (rule, value, callback) => {
             if (value === '') {
@@ -77,10 +78,11 @@ import Axios from 'axios';
                 var params = new URLSearchParams();
                 params.append('username',this.ruleForm2.username);
                 params.append('password',this.ruleForm2.pass);
-                Axios.post('http://127.0.0.1:80/heat/welcome/login',params).then((res)=>{
+                Axios.post('http://127.0.0.1:80/heatphp/welcome/login',params).then((res)=>{
                     console.log(res);
-                 if (res.data === 1) {
-                    
+                 if (res.data !== 0) {
+                    localStorage.setItem('username', res.data.admin_username);
+                    localStorage.setItem('id', res.data.admin_id);
                     this.$router.push('./home');
                  } else {
                     this.centerDialogVisible = true;
