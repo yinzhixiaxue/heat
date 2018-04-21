@@ -15,3 +15,31 @@
     </el-header>
   </el-container>
 </template>
+<script>
+  export default {
+    created() {
+      console.log(localStorage.username);
+      if (localStorage.username) {
+        this.name = localStorage.username;
+        this.flag = true;
+      } else {
+        this.flag = false;
+      }
+    },
+    data() {
+      return {
+        name: '你好',
+        flag: false,
+      }
+    },
+    methods: {
+      handleSelect(key, keyPath) {
+        console.log(key, keyPath);
+      },
+      layout: function () {
+        localStorage.clear();
+        this.$router.push('./login');
+      }
+    }
+  }
+</script>

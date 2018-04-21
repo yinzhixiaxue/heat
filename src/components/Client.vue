@@ -1,13 +1,13 @@
 <template>
 	<div>
-	  <el-container>
+	  <!-- <el-container>
 	    <el-header>
 	      供暖收费管理系统
 	      <div class="header-info">
 	        <div v-if="true">
 	          <span>{{name}}已登录</span>
 	          <a @click ='layout'>退出登陆</a>
-	          <!-- <router-link to="/Login">退出登陆</router-link> -->
+	          <router-link to="/Login">退出登陆</router-link>
 	        </div>
 	        <div v-else>
 	          <span>未登录</span>
@@ -15,7 +15,7 @@
 	        </div>
 	      </div>
 	    </el-header>
-	    <v-nav></v-nav>
+	    <v-nav></v-nav> -->
 	    <el-button type="text" @click="centerDialogVisible = true">新建用户</el-button>
 
 		<el-dialog
@@ -72,17 +72,13 @@
                         <el-button @click="resetForm('ruleForm2')">重置</el-button>
                     </el-form-item>
               </el-form>
-		  <!-- <span slot="footer" class="dialog-footer">
-		    <el-button @click="centerDialogVisible = false">取 消</el-button>
-		    <el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
-		  </span> -->
 		</el-dialog>
-	  </el-container>
+	  <!-- </el-container> -->
 	</div>
 </template>
 <script>
-import nav from './Nav';
 import Axios from 'axios';
+import nav from './NavMain'
   export default {
     components:{
           'v-nav': nav
