@@ -8,8 +8,8 @@
       <el-menu-item index="5" @click="toggleTab('Change')">变更管理</el-menu-item>
       <el-menu-item index="6" @click="toggleTab('Reduction')">减免折让</el-menu-item>
     </el-menu>
-    <div class="main-content">
-      <charge  :is="currentTab" keep-alive></charge>
+    <div class="main-content" keep-alive="true">
+      <charge  :is="currentTab" ></charge>
     </div>
   </div>
 
@@ -20,9 +20,6 @@
   import Change from './ClientChange.vue'
   import Reduction from './Reduction.vue'
   import Debt from './Debt.vue'
-
-
-
 
   export default {
     data() {

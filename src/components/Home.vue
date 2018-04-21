@@ -25,10 +25,6 @@
       handleSelect(key, keyPath) {
         console.log(key, keyPath);
       },
-      layout: function () {
-        localStorage.clear();
-        this.$router.push('./login');
-      }
     }
   }
 </script>
