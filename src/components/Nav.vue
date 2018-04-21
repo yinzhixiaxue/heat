@@ -5,7 +5,7 @@
       <el-menu-item index="2" @click="toggleTab('charge')">客户管理</el-menu-item>
       <el-menu-item index="3" @click="toggleTab('charge')">收费管理</el-menu-item>
       <el-menu-item index="4" @click="toggleTab('charge')">清欠管理</el-menu-item>
-      <el-menu-item index="5" @click="toggleTab('charge')">变更管理</el-menu-item>
+      <el-menu-item index="5" @click="toggleTab('Change')">变更管理</el-menu-item>
       <el-menu-item index="6" @click="toggleTab('charge')">减免折让</el-menu-item>
     </el-menu>
     <div class="main-content">
@@ -17,6 +17,8 @@
 <script>
   import Main from './Main'
   import charge from './charge'
+  import Change from './ClientChange.vue'
+
 
   export default {
     data() {
@@ -27,7 +29,8 @@
     },
     components: {
        Main,
-       charge
+       charge,
+       Change
     },
     methods: {
       handleSelect(key, keyPath) {
