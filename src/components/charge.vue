@@ -105,11 +105,9 @@
       toggleSelection(rows) {
         if (rows) {
           rows.forEach(row => {
-            this.$refs.multipleTable.toggleRowSelection(row);
+            this.$refs.multipleTable.toggleRowSelection(row,true);
             row.tag ='已收费'
           });
-        } else {
-          this.$refs.multipleTable.clearSelection();
         }
       },
       handleSelectionChange(val) {
