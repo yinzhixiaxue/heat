@@ -11,15 +11,6 @@
   import Nav from './NavMain'
   import Footer from './Footer'
   export default {
-    created() {
-      console.log(localStorage.username);
-      if (localStorage.username) {
-        this.name = localStorage.username;
-        this.flag = true;
-      } else {
-        this.flag = false;
-      }
-    },
     components: {
       'v-nav': Nav,
       'v-home': Home,
@@ -27,14 +18,7 @@
     },
     data() {
       return {
-        name: '你好',
         flag: false,
-        // activeIndex: '1',
-        img: [
-          {'pic': '01', 'src': require('../assets/1.jpg')},
-          {'pic': '02', 'src': require('../assets/1.jpg')},
-          {'pic': '03', 'src': require('../assets/1.jpg')}
-        ]
       }
     },
     methods: {
