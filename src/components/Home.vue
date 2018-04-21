@@ -8,7 +8,7 @@
 <script>
 
   import Home from './Header'
-  import Nav from './Nav'
+  import Nav from './NavMain'
   import Footer from './Footer'
   export default {
     created() {
