@@ -79,7 +79,6 @@ import Axios from 'axios';
                 params.append('username',this.ruleForm2.username);
                 params.append('password',this.ruleForm2.pass);
                 Axios.post('http://127.0.0.1:80/heatphp/welcome/login',params).then((res)=>{
-                    console.log(res);
                  if (res.data !== 0) {
                     localStorage.setItem('username', res.data.admin_username);
                     localStorage.setItem('id', res.data.admin_id);

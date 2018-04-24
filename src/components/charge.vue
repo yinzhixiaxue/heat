@@ -58,7 +58,71 @@
 </template>
 
 <script>
+import Axios from 'axios';
   export default {
+    created() {
+          // this.init();
+          // console.log(this.myinit);
+          Axios.post('http://127.0.0.1:80/heatphp/welcome/pay_information').then((res)=>{
+            if(res){     
+              var arr = this.tableData3;
+              var data = res.data;
+              arr.length = data.length;
+               for(var i = 0;i < data.length; i++) {
+                    arr[i].date = data[i].user_entertime;
+                    arr[i].name = data[i].user_name;
+                    arr[i].address = data[i].user_address;
+                    arr[i].tag = '';
+                  }
+                  this.tableData3 = arr;
+              // for(var i = 0;i < data.length; i++) {
+              //    (function(idx){
+              //       arr[idx].date = data[idx].user_entertime;
+              //       arr[idx].name = data[idx].user_name;
+              //       arr[idx].address = data[idx].user_address;
+              //       arr[idx].tag = '';
+              //       console.log(idx);
+              //       console.log(data[idx].user_entertime);
+              //       console.log(data[idx].user_name);
+              //       console.log(data[idx].user_address);
+              //       console.log(arr[idx].date);
+              //       console.log(arr[idx].name);
+              //       console.log(arr[idx].address);
+              //       console.log(arr[idx].tag);
+              //   })(i);
+                
+              // }
+              // console.log(arr);
+              // arr.length = data.length;
+              // setTimeout(function(){
+              //   for(var i = 0;i < data.length; i++) {
+              //    (function(idx){
+              //       this.myinit[idx].date = data[idx].user_entertime;
+              //       this.myinit[idx].name = data[idx].user_name;
+              //       this.myinit[idx].address = data[idx].user_address;
+              //       this.myinit[idx].tag = '';
+              //       console.log(idx);
+              //       console.log(data[idx].user_entertime);
+              //       console.log(data[idx].user_name);
+              //       console.log(data[idx].user_address);
+              //       console.log(arr[idx].date);
+              //       console.log(arr[idx].name);
+              //       console.log(arr[idx].address);
+              //       console.log(arr[idx].tag);
+              //   })(i);
+                
+              // }
+              // }, 2000);
+              // setTimeout(function(){
+              //   console.log(1000000);
+              //   console.log(arr);
+              //     // this.myinit.length = data.length;
+              //     this.tableData3 = this.myinit;
+              // }, 2000);
+              
+            }   
+        });
+    }, 
     data() {
       return {
         tableData3: [{
@@ -66,42 +130,54 @@
           name: '王小虎',
           address: '上海市普陀区金沙江路 1518 弄',
           tag: ''
-        }, {
-          date: '2016-05-02',
+        },{
+          date: '2016-05-03',
           name: '王小虎',
           address: '上海市普陀区金沙江路 1518 弄',
           tag: ''
-        }, {
-          date: '2016-05-04',
+        },{
+          date: '2016-05-03',
           name: '王小虎',
           address: '上海市普陀区金沙江路 1518 弄',
           tag: ''
-        }, {
-          date: '2016-05-01',
+        },{
+          date: '2016-05-03',
           name: '王小虎',
           address: '上海市普陀区金沙江路 1518 弄',
           tag: ''
-        }, {
-          date: '2016-05-08',
+        },{
+          date: '2016-05-03',
           name: '王小虎',
           address: '上海市普陀区金沙江路 1518 弄',
           tag: ''
-        }, {
-          date: '2016-05-06',
+        },{
+          date: '2016-05-03',
           name: '王小虎',
           address: '上海市普陀区金沙江路 1518 弄',
           tag: ''
-        }, {
-          date: '2016-05-07',
+        },{
+          date: '2016-05-03',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1518 弄',
+          tag: ''
+        },{
+          date: '2016-05-03',
           name: '王小虎',
           address: '上海市普陀区金沙江路 1518 弄',
           tag: ''
         }],
+        // myinit: [],
         multipleSelection: []
       }
     },
 
     methods: {
+      init() {
+       this.myinit = this.tableData3;
+        for(var k=1;k<100;k++) {
+                this.myinit[k] = this.myinit[k-1];
+              }
+      },
       toggleSelection(rows) {
         if (rows) {
           rows.forEach(row => {

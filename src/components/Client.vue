@@ -150,24 +150,6 @@ import nav from './NavMain'
       },
     created() {
       this.fresh_data();
-      // var params = new URLSearchParams(); 
-      //     params.append('username',this.input);
-      //     Axios.post('http://127.0.0.1:80/heatphp/welcome/find_user_information',params).then((res)=>{
-      //       if(res){           
-      //         var _this = this;
-      //         this.tableData3 = res.data || [];
-      //         if(res.data) {
-      //           console.log(res.data);
-      //           this.centerDialogVisible = false;
-      //          //  setTimeout(function(){
-      //          //    _this.$router.push('./Login');
-      //          // }, 2000);
-      //         } else {
-      //           this.centerDialogVisible = true;
-      //           //alert('fail');
-      //         }
-      //       }
-      //   });
     },
     data() {
     	var checkage = (rule, value, callback) => {
@@ -341,7 +323,7 @@ import nav from './NavMain'
         this.balance_internet = '';
         this.ruleForm2.username = ''; 
         this.ruleForm2.age = '';
-        this.ruleForm2.telephone =  '',
+        this.ruleForm2.telephone =  '';
         this.ruleForm2.address =  ''
       },
       fresh_data() {
