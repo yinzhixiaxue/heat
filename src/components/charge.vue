@@ -74,52 +74,7 @@ import Axios from 'axios';
                     arr[i].address = data[i].user_address;
                     arr[i].tag = '';
                   }
-                  this.tableData3 = arr;
-              // for(var i = 0;i < data.length; i++) {
-              //    (function(idx){
-              //       arr[idx].date = data[idx].user_entertime;
-              //       arr[idx].name = data[idx].user_name;
-              //       arr[idx].address = data[idx].user_address;
-              //       arr[idx].tag = '';
-              //       console.log(idx);
-              //       console.log(data[idx].user_entertime);
-              //       console.log(data[idx].user_name);
-              //       console.log(data[idx].user_address);
-              //       console.log(arr[idx].date);
-              //       console.log(arr[idx].name);
-              //       console.log(arr[idx].address);
-              //       console.log(arr[idx].tag);
-              //   })(i);
-                
-              // }
-              // console.log(arr);
-              // arr.length = data.length;
-              // setTimeout(function(){
-              //   for(var i = 0;i < data.length; i++) {
-              //    (function(idx){
-              //       this.myinit[idx].date = data[idx].user_entertime;
-              //       this.myinit[idx].name = data[idx].user_name;
-              //       this.myinit[idx].address = data[idx].user_address;
-              //       this.myinit[idx].tag = '';
-              //       console.log(idx);
-              //       console.log(data[idx].user_entertime);
-              //       console.log(data[idx].user_name);
-              //       console.log(data[idx].user_address);
-              //       console.log(arr[idx].date);
-              //       console.log(arr[idx].name);
-              //       console.log(arr[idx].address);
-              //       console.log(arr[idx].tag);
-              //   })(i);
-                
-              // }
-              // }, 2000);
-              // setTimeout(function(){
-              //   console.log(1000000);
-              //   console.log(arr);
-              //     // this.myinit.length = data.length;
-              //     this.tableData3 = this.myinit;
-              // }, 2000);
-              
+                  this.tableData3 = arr;         
             }   
         });
     }, 
@@ -166,7 +121,6 @@ import Axios from 'axios';
           address: '上海市普陀区金沙江路 1518 弄',
           tag: ''
         }],
-        // myinit: [],
         multipleSelection: []
       }
     },

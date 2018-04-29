@@ -73,13 +73,6 @@ import Axios from 'axios';
                     arr[i].tag = '';
                   }
                   this.tableData3 = arr;
-              // for(var i = 0;i < data.length; i++) {
-              //   arr[i].date = data[i].user_entertime;
-              //   arr[i].name = data[i].user_name;
-              //   arr[i].address = data[i].user_address;
-              //   arr[i].tag = '';
-              // }
-              // this.tableData3 = arr;
             }
               
         });

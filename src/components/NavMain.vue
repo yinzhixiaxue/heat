@@ -6,7 +6,8 @@
       <el-menu-item index="3" @click="toggleTab('charge')">收费管理</el-menu-item>
       <el-menu-item index="4" @click="toggleTab('Debt')">清欠管理</el-menu-item>
       <el-menu-item index="5" @click="toggleTab('Change')">变更管理</el-menu-item>
-      <el-menu-item index="6" @click="toggleTab('Reduction')">减免折让</el-menu-item>
+      <el-menu-item index="6" @click="toggleTab('Blacklist')">黑名单</el-menu-item>
+      <el-menu-item index="7" @click="toggleTab('Stop')">暂停</el-menu-item>
     </el-menu>
     <div class="main-content" keep-alive="true">
       <charge  :is="currentTab" ></charge>
@@ -19,8 +20,9 @@
   import Client from './Client'
   import charge from './charge'
   import Change from './ClientChange.vue'
-  import Reduction from './Reduction.vue'
+  import Blacklist from './Blacklist.vue'
   import Debt from './Debt.vue'
+  import Stop from './Stop.vue'
 
   export default {
     data() {
@@ -34,8 +36,9 @@
       Client,
        charge,
        Change,
-      Reduction,
-      Debt
+      Blacklist,
+      Debt,
+      Stop
     },
     methods: {
       handleSelect(key, keyPath) {
