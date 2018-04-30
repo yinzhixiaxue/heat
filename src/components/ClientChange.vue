@@ -75,9 +75,6 @@
         <el-button type="primary" @click="handleClick">确 定</el-button>
       </div>
     </el-dialog>
-    <div style="margin-top: 20px">
-      <el-button @click="toggleSelection(tableData3)">批量发送催缴短信</el-button>
-    </div>
   </div>
 
 </template>
