@@ -46,11 +46,35 @@
             type="text">
             用热状态变更
           </el-button>
-          <el-button type="text" @click="open5">客户类型变更</el-button>
-          <el-button type="text" @click="open4">计费变更</el-button>
+          <el-button type="text" @click="dialogFormVisible = true,isCustomer = true">客户类型变更</el-button>
+          <el-button type="text" @click="dialogFormVisible = true,isCustomer = false">计费变更</el-button>
         </template>
       </el-table-column>
     </el-table>
+    <el-dialog title="变更" :visible.sync="dialogFormVisible">
+      <el-form :model="form">
+        <div v-if="isCustomer">
+          <el-form-item label="客服类型" :label-width="formLabelWidth">
+            <el-select v-model="form.CustomerRegion" placeholder="">
+              <el-option label="普通" value="普通"></el-option>
+              <el-option label="超级" value="超级"></el-option>
+            </el-select>
+          </el-form-item>
+        </div>
+        <div v-else>
+          <el-form-item label="用热方式" :label-width="formLabelWidth">
+            <el-select v-model="form.region" placeholder="">
+              <el-option label="计量供热" value="计量供热"></el-option>
+              <el-option label="面积供热" value="面积供热"></el-option>
+            </el-select>
+          </el-form-item>
+        </div>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="handleClick">确 定</el-button>
+      </div>
+    </el-dialog>
     <div style="margin-top: 20px">
       <el-button @click="toggleSelection(tableData3)">批量发送催缴短信</el-button>
     </div>
@@ -134,32 +158,49 @@
           value: '选项5',
           label: '北京烤鸭'
         }],
-        value4: []
-      }
+        value4: [],
+        gridData: [{
+          date: '2016-05-02',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1518 弄'
+        }, {
+          date: '2016-05-04',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1518 弄'
+        }, {
+          date: '2016-05-01',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1518 弄'
+        }, {
+          date: '2016-05-03',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1518 弄'
+        }],
+        isCustomer :false,
+        dialogTableVisible: false,
+        dialogFormVisible: false,
+        form: {
+          region: '',
+          delivery: false,
+          CustomerRegion: ''
+        },
+        formLabelWidth: '120px'
+      };
     },
 
     methods: {
-      open5() {
-        this.$alert(`
-  <el-select v-model="value4" clearable placeholder="请选择">
-      <el-option
-      v-for="item in this.options"
-      :key="item.value"
-      :label="item.label"
-      :value="item.value">
-       </el-option>
-  </el-select>
-`, 'HTML 片段', {
-          dangerouslyUseHTMLString: true
-        });
+      handleClick(){
+        this.dialogFormVisible = false;
+        // 处理是否选择了数据
+        this.form.region || this.form.CustomerRegion ? this.popoverThings():''
       },
-      open4() {
+      popoverThings() {
         const h = this.$createElement;
         this.$msgbox({
-          title: '消息',
+          title: '提醒消息',
           message: h('p', null, [
-            h('span', null, '计费方式 '),
-            h('i', {style: 'color: teal'}, '面积供热')
+            h('span', null, this.isCustomer?'客户类型为':'计费方式为'),
+            h('i', {style: 'color: teal'},this.isCustomer? this.form.CustomerRegion:this.form.region)
           ]),
           showCancelButton: true,
           confirmButtonText: '确定',
