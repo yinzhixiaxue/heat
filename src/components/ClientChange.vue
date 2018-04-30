@@ -26,12 +26,23 @@
         show-overflow-tooltip>
       </el-table-column>
       <el-table-column
+        prop="heatingMode"
+        label="供热方式"
+        width="120">
+        <template slot-scope="scope">
+          <el-tag
+            :type="scope.row.heatingMode === '计量供热' ? 'primary' : 'success'"
+            close-transition>{{scope.row.heatingMode}}
+          </el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column
         prop="tag"
-        label="状态"
+        label="用热状态"
       >
         <template slot-scope="scope">
           <el-tag
-            :type="scope.row.tag === '报停' ? 'primary' : 'success'"
+            :type="scope.row.tag === '正常' ? 'primary' : 'success'"
             close-transition>{{scope.row.tag}}
           </el-tag>
         </template>
@@ -42,22 +53,23 @@
         width="120">
         <template slot-scope="scope">
           <el-button
-            @click.native.prevent="SendMsg(scope.$index, scope.row.tag)"
+            @click.native.prevent=" index = scope.$index,dialogFormVisible = true,isCustomer = true"
             type="text">
-            用热状态变更
+            客户类型变更
           </el-button>
-          <el-button type="text" @click="dialogFormVisible = true,isCustomer = true">客户类型变更</el-button>
-          <el-button type="text" @click="dialogFormVisible = true,isCustomer = false">计费变更</el-button>
+          <!--<el-button type="text" @click="dialogFormVisible = true,isCustomer = true">客户类型变更</el-button>-->
+          <el-button type="text" @click=" index = scope.$index,dialogFormVisible = true,isCustomer = false">计费变更</el-button>
         </template>
       </el-table-column>
     </el-table>
     <el-dialog title="变更" :visible.sync="dialogFormVisible">
       <el-form :model="form">
         <div v-if="isCustomer">
-          <el-form-item label="客服类型" :label-width="formLabelWidth">
+          <el-form-item label="用热类型" :label-width="formLabelWidth">
             <el-select v-model="form.CustomerRegion" placeholder="">
-              <el-option label="普通" value="普通"></el-option>
-              <el-option label="超级" value="超级"></el-option>
+              <el-option label="正常" value="正常"></el-option>
+              <el-option label="停保" value="停保"></el-option>
+              <el-option label="未供热" value="未供热"></el-option>
             </el-select>
           </el-form-item>
         </div>
@@ -97,7 +109,6 @@
           }
           this.tableData3 = arr;
         }
-
       });
     },
     data() {
@@ -106,56 +117,47 @@
           date: '2016-05-03',
           name: '王小虎',
           address: '上海市普陀区金沙江路 1518 弄',
-          tag: '正常'
+          tag: '正常',
+          heatingMode : '计量供热'
         }, {
           date: '2016-05-02',
           name: '王小虎',
           address: '上海市普陀区金沙江路 1518 弄',
-          tag: '正常'
+          tag: '正常',
+          heatingMode : '计量供热'
         }, {
           date: '2016-05-04',
           name: '王小虎',
           address: '上海市普陀区金沙江路 1518 弄',
-          tag: '正常'
+          tag: '正常',
+          heatingMode : '计量供热'
         }, {
           date: '2016-05-01',
           name: '王小虎',
           address: '上海市普陀区金沙江路 1518 弄',
-          tag: '正常'
+          tag: '正常',
+          heatingMode : '计量供热'
         }, {
           date: '2016-05-08',
           name: '王小虎',
           address: '上海市普陀区金沙江路 1518 弄',
-          tag: '正常'
+          tag: '正常',
+          heatingMode : '计量供热'
         }, {
           date: '2016-05-06',
           name: '王小虎',
           address: '上海市普陀区金沙江路 1518 弄',
-          tag: '正常'
+          tag: '正常',
+          heatingMode : '计量供热'
         }, {
           date: '2016-05-07',
           name: '王小虎',
           address: '上海市普陀区金沙江路 1518 弄',
-          tag: '正常'
+          tag: '正常',
+          heatingMode : '计量供热'
         }],
+        index : '', // 保存每行的index值为下面改变状态使用
         multipleSelection: [],
-        gridData: [{
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }],
         isCustomer: false,
         dialogTableVisible: false,
         dialogFormVisible: false,
@@ -171,15 +173,21 @@
     methods: {
       handleClick() {
         this.dialogFormVisible = false;
-        // 处理是否选择了数据
+        if(this.isCustomer){
+          this.changeState(this.index);
+        }else {
+          this.changeStyle(this.index);
+        }
+        this.changeStyle(this.index)
         this.form.region || this.form.CustomerRegion ? this.popoverThings() : ''
       },
+       // 第二个弹出层代码
       popoverThings() {
         const h = this.$createElement;
         this.$msgbox({
           title: '提醒消息',
           message: h('p', null, [
-            h('span', null, this.isCustomer ? '客户类型为' : '计费方式为'),
+            h('span', null, this.isCustomer ? '用热状态' : '计费方式为'),
             h('i', {style: 'color: teal'}, this.isCustomer ? this.form.CustomerRegion : this.form.region)
           ]),
           showCancelButton: true,
@@ -212,9 +220,18 @@
       handleSelectionChange(val) {
         this.multipleSelection = val;
       },
-      SendMsg(index, rows) {
-        rows = '报停';
-        this.tableData3[index].tag = rows
+      changeState(index) {
+        setTimeout(()=>{
+          let rows = this.form.CustomerRegion;
+          this.tableData3[index].tag = rows ;
+          this.form.CustomerRegion = '';  // 清空选择框的数据。
+        },3000)
+      },
+      changeStyle(index){
+        setTimeout(()=>{
+          let rows = this.form.region;
+          this.tableData3[index].heatingMode = rows ;
+        },3000)
       },
       filterTag(value, row) {
         return row.tag === value;
