@@ -173,7 +173,7 @@
           name: '王小虎',
           address: '上海市普陀区金沙江路 1518 弄'
         }],
-        isCustomer :false,
+        isCustomer: false,
         dialogTableVisible: false,
         dialogFormVisible: false,
         form: {
@@ -186,18 +186,18 @@
     },
 
     methods: {
-      handleClick(){
+      handleClick() {
         this.dialogFormVisible = false;
         // 处理是否选择了数据
-        this.form.region || this.form.CustomerRegion ? this.popoverThings():''
+        this.form.region || this.form.CustomerRegion ? this.popoverThings() : ''
       },
       popoverThings() {
         const h = this.$createElement;
         this.$msgbox({
           title: '提醒消息',
           message: h('p', null, [
-            h('span', null, this.isCustomer?'客户类型为':'计费方式为'),
-            h('i', {style: 'color: teal'},this.isCustomer? this.form.CustomerRegion:this.form.region)
+            h('span', null, this.isCustomer ? '客户类型为' : '计费方式为'),
+            h('i', {style: 'color: teal'}, this.isCustomer ? this.form.CustomerRegion : this.form.region)
           ]),
           showCancelButton: true,
           confirmButtonText: '确定',
@@ -225,7 +225,7 @@
             message: '取消变更'
           });
         });
-        ;
+
 
       },
       toggleSelection(rows) {
