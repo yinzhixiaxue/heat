@@ -139,23 +139,6 @@
           tag: '正常'
         }],
         multipleSelection: [],
-        options: [{
-          value: '选项1',
-          label: '黄金糕'
-        }, {
-          value: '选项2',
-          label: '双皮奶'
-        }, {
-          value: '选项3',
-          label: '蚵仔煎'
-        }, {
-          value: '选项4',
-          label: '龙须面'
-        }, {
-          value: '选项5',
-          label: '北京烤鸭'
-        }],
-        value4: [],
         gridData: [{
           date: '2016-05-02',
           name: '王小虎',
@@ -225,16 +208,6 @@
             message: '取消变更'
           });
         });
-
-
-      },
-      toggleSelection(rows) {
-        if (rows) {
-          rows.forEach(row => {
-            this.$refs.multipleTable.toggleRowSelection(row, true);
-            row.tag = '已批量发送催缴短信'
-          });
-        }
       },
       handleSelectionChange(val) {
         this.multipleSelection = val;
