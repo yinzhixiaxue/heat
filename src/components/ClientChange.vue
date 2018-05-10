@@ -96,20 +96,7 @@
 
   export default {
     created() {
-      Axios.post('http://127.0.0.1:80/heatphp/welcome/arrears_information').then((res) => {
-        if (res) {
-          var arr = this.tableData3;
-          var data = res.data;
-          arr.length = data.length;
-          for (var i = 0; i < data.length; i++) {
-            arr[i].date = data[i].user_entertime;
-            arr[i].name = data[i].user_name;
-            arr[i].address = data[i].user_address;
-            arr[i].tag = '';
-          }
-          this.tableData3 = arr;
-        }
-      });
+      this.find_information();
     },
     data() {
       return {
@@ -155,6 +142,30 @@
           address: '上海市普陀区金沙江路 1518 弄',
           tag: '正常',
           heatingMode : '计量供热'
+        }, {
+          date: '2016-05-07',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1518 弄',
+          tag: '正常',
+          heatingMode : '计量供热'
+        }, {
+          date: '2016-05-07',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1518 弄',
+          tag: '正常',
+          heatingMode : '计量供热'
+        }, {
+          date: '2016-05-07',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1518 弄',
+          tag: '正常',
+          heatingMode : '计量供热'
+        }, {
+          date: '2016-05-07',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1518 弄',
+          tag: '正常',
+          heatingMode : '计量供热'
         }],
         index : '', // 保存每行的index值为下面改变状态使用
         multipleSelection: [],
@@ -171,6 +182,23 @@
     },
 
     methods: {
+      find_information() {
+        Axios.post('http://127.0.0.1:80/heatphp/welcome/find_user_information').then((res) => {
+        if (res) {
+          var arr = this.tableData3;
+          var data = res.data;
+          arr.length = data.length;
+          for (var i = 0; i < data.length; i++) {
+            arr[i].date = data[i].user_entertime;
+            arr[i].name = data[i].user_name;
+            arr[i].address = data[i].user_address;
+            arr[i].tag = data[i].balance_state;
+            arr[i].heatingMode = data[i].balance_style;
+          }
+          this.tableData3 = arr;
+        }
+      });
+      },
       handleClick() {
         this.dialogFormVisible = false;
         if(this.isCustomer){
@@ -178,7 +206,6 @@
         }else {
           this.changeStyle(this.index);
         }
-        this.changeStyle(this.index)
         this.form.region || this.form.CustomerRegion ? this.popoverThings() : ''
       },
        // 第二个弹出层代码
@@ -221,17 +248,40 @@
         this.multipleSelection = val;
       },
       changeState(index) {
-        setTimeout(()=>{
-          let rows = this.form.CustomerRegion;
-          this.tableData3[index].tag = rows ;
-          this.form.CustomerRegion = '';  // 清空选择框的数据。
-        },3000)
+        var params = new URLSearchParams(); 
+          params.append('username',this.tableData3[index].name);
+          params.append('balance_state',this.form.CustomerRegion);
+          Axios.post('http://127.0.0.1:80/heatphp/welcome/update_balance_state',params).then((res)=>{
+            if(res){           
+              if(res.data) {
+                setTimeout(()=>{
+                  let rows = this.form.CustomerRegion;
+                  this.tableData3[index].tag = rows ;
+                  this.form.CustomerRegion = '';  // 清空选择框的数据。
+                },3000)
+               
+              } else {
+                alert('fail');
+              }
+            }
+        });
       },
       changeStyle(index){
-        setTimeout(()=>{
-          let rows = this.form.region;
-          this.tableData3[index].heatingMode = rows ;
-        },3000)
+        var params = new URLSearchParams(); 
+          params.append('username',this.tableData3[index].name);
+          params.append('balance_style',this.form.region);
+          Axios.post('http://127.0.0.1:80/heatphp/welcome/update_balance_style',params).then((res)=>{
+            if(res){           
+              if(res.data) {
+               setTimeout(()=>{
+                let rows = this.form.region;
+                this.tableData3[index].heatingMode = rows ;
+              },3000)
+              } else {
+                alert('fail');
+              }
+            }
+        });
       },
       filterTag(value, row) {
         return row.tag === value;

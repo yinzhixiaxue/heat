@@ -87,28 +87,28 @@
 		  <!-- <span>需要注意的是内容是默认不居中的</span> -->
 		  <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="120px" class="demo-ruleForm reg-content" action="http://127.0.0.1:80/society/welcome/myreg" method="post">
             <el-form-item label="姓名" prop="username">
-                <el-input type="text" v-model="ruleForm2.username" auto-complete="off" name="username"></el-input>
+                <el-input type="text" v-model="ruleForm2.username" auto-complete="off" name="username" :disabled="istransfer||isDemolition"></el-input>
             </el-form-item>
             <el-form-item label="性别" prop="sex">
-              <el-radio-group v-model="sex" name="sex" class="radio-sex">
+              <el-radio-group v-model="sex" name="sex" class="radio-sex" :disabled="isDemolition">
                 <el-radio label="男"></el-radio>
                 <el-radio label="女"></el-radio>
               </el-radio-group>
             </el-form-item> 
             <el-form-item label="年龄" prop="age">
-                <el-input type="text" v-model="ruleForm2.age" auto-complete="off" name="age"></el-input>
+                <el-input type="text" v-model="ruleForm2.age" auto-complete="off" name="age" :disabled="isDemolition"></el-input>
             </el-form-item>
             <!-- <el-form-item label="电子邮箱" prop="email">
                 <el-input type="text" v-model="ruleForm2.email" auto-complete="off" name="email"></el-input>
             </el-form-item> -->
             <el-form-item label="手机号码" prop="telephone">
-                <el-input type="text" v-model="ruleForm2.telephone" auto-complete="off" name="telephone"></el-input>
+                <el-input type="text" v-model="ruleForm2.telephone" auto-complete="off" name="telephone" :disabled="isDemolition"></el-input>
             </el-form-item>
              <el-form-item label="地址" prop="address">
                 <el-input type="text" v-model="ruleForm2.address" auto-complete="off" name="address"></el-input>
             </el-form-item>
             <el-form-item label="在网状态" prop="balance_internet">
-              <el-radio-group v-model="balance_internet" name="balance_internet" class="radio-sex">
+              <el-radio-group v-model="balance_internet" name="balance_internet" class="radio-sex" :disabled="isDemolition">
                 <el-radio label="入网"></el-radio>
                 <el-radio label="退网"></el-radio>
                 <el-radio label="拆户"></el-radio>
@@ -116,14 +116,14 @@
               </el-radio-group>
             </el-form-item> 
             <el-form-item label="用热状态" prop="balance_state">
-              <el-radio-group v-model="balance_state" name="balance_state" class="radio-sex">
+              <el-radio-group v-model="balance_state" name="balance_state" class="radio-sex" :disabled="isDemolition">
                 <el-radio label="正常"></el-radio>
                 <el-radio label="停保"></el-radio>
                 <el-radio label="未供热"></el-radio>
               </el-radio-group>
             </el-form-item> 
             <el-form-item label="用热方式" prop="balance_style">
-              <el-radio-group v-model="balance_style" name="balance_style" class="radio-sex">
+              <el-radio-group v-model="balance_style" name="balance_style" class="radio-sex" :disabled="isDemolition">
                 <el-radio label="计量供热"></el-radio>
                 <el-radio label="面积供热"></el-radio>
               </el-radio-group>
@@ -212,6 +212,8 @@ import nav from './NavMain'
         }
     }
       return {
+        istransfer: false,//是否过户
+        isDemolition: false,//是否拆迁
         updateFlag: false,
         input: '',
         name: '你好',
@@ -330,18 +332,15 @@ import nav from './NavMain'
           var params = new URLSearchParams(); 
           params.append('username',this.input);
           Axios.post('http://127.0.0.1:80/heatphp/welcome/find_user_information',params).then((res)=>{
-            if(res){           
+            if(res){     
+              this.updateFlag = false;
+              this.isDemolition = false;
               var _this = this;
               this.tableData3 = res.data || [];
               if(res.data) {
-                console.log(res.data);
                 this.centerDialogVisible = false;
-               //  setTimeout(function(){
-               //    _this.$router.push('./Login');
-               // }, 2000);
               } else {
                 this.centerDialogVisible = true;
-                //alert('fail');
               }
             }
         });
@@ -349,10 +348,9 @@ import nav from './NavMain'
       createUser() {
         this.init();
         this.centerDialogVisible = true;
+        this.updateFlag = false;    
         this.updateFlag = false;
-      },
-      handleSelect(key, keyPath) {
-        console.log(key, keyPath);
+        this.isDemolition = false; 
       },
       layout: function() {
         localStorage.clear();
@@ -361,44 +359,37 @@ import nav from './NavMain'
       submitForm(formName) {
         this.updateFlag = false;
         this.$refs[formName].validate((valid) => {
-          if (valid) {
-          	var myDate = new Date();
-          	var mytime=myDate.toLocaleTimeString();     //获取当前时间
-          	console.log(myDate);
-          	console.log(mytime);
-          	console.log(myDate.toLocaleString());
+          if (valid) {   //获取当前时间
             var params = new URLSearchParams(); 
                 params.append('username',this.ruleForm2.username);
                 params.append('sex',this.sex);
                 params.append('age',this.ruleForm2.age);
-                // params.append('age','20');
-                // params.append('email',this.ruleForm2.email);
                 params.append('telephone',this.ruleForm2.telephone); 
                 params.append('address',this.ruleForm2.address); 
-                params.append('entertime',myDate);
                 params.append('balance_internet',this.balance_internet);
                 params.append('balance_state',this.balance_state);
                 params.append('balance_style',this.balance_style);
                
                 Axios.post('http://127.0.0.1:80/heatphp/welcome/create_user',params).then((res)=>{
                   if(res){
-                  	console.log(res);
                     this.centerDialogVisible = true;
-                    // this.tip = TIPS[res.data];
                     var _this = this;
                     if(res.data) {
+                      this.$message({
+                        type: 'success',
+                        message: '新增用户成功!'
+                      });
                       this.centerDialogVisible = false;
-                     //  setTimeout(function(){
-                     //    _this.$router.push('./Login');
-                     // }, 2000);
                     } else {
                       this.centerDialogVisible = true;
-                      //alert('fail');
+                      this.$message({
+                        type: 'warn',
+                        message: '新增用户失败!'
+                      });
                     }
                   }
               });
           } else {
-            console.log('error submit!!');
             return false;
           }
         });
@@ -406,11 +397,6 @@ import nav from './NavMain'
       updateForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            // var myDate = new Date();
-            // var mytime=myDate.toLocaleTimeString();     //获取当前时间
-            // console.log(myDate);
-            // console.log(mytime);
-            // console.log(myDate.toLocaleString());
             var params = new URLSearchParams(); 
                 params.append('username',this.ruleForm2.username);
                 params.append('sex',this.sex);
@@ -423,20 +409,25 @@ import nav from './NavMain'
                
                 Axios.post('http://127.0.0.1:80/heatphp/welcome/update_user',params).then((res)=>{
                   if(res){
-                    console.log(res);
                     this.centerDialogVisible = true;
                     var _this = this;
                     if(res.data) {
                       this.fresh_data();
+                      this.$message({
+                        type: 'success',
+                        message: '更新用户成功!'
+                      });
                       this.centerDialogVisible = false;
                     } else {
+                      this.$message({
+                        type: 'warn',
+                        message: '更新用户失败!'
+                      });
                       this.centerDialogVisible = true;
-                      //alert('fail');
                     }
                   }
               });
           } else {
-            console.log('error submit!!');
             return false;
           }
         });
@@ -464,7 +455,6 @@ import nav from './NavMain'
           params.append('username',name);
           Axios.post('http://127.0.0.1:80/heatphp/welcome/find_user_information',params).then((res)=>{
             if(res){     
-              console.log(res.data);
               this.centerDialogVisible = true;
               this.sex = res.data[0].user_sex;
               this.balance_state = res.data[0].balance_state;
@@ -481,12 +471,13 @@ import nav from './NavMain'
               else {
                 this.balance_internet = "过户"
               }
-              // this.balance_internet = res.data[0].balance_internet;
               this.ruleForm2.username = res.data[0].user_name;
               this.ruleForm2.age = res.data[0].user_age;
               this.ruleForm2.telephone = res.data[0].user_telephone;
               this.ruleForm2.address = res.data[0].user_address;
               this.updateFlag = true;
+              this.istransfer = true;
+              this.isDemolition = false;
             }
         });
       },
@@ -495,7 +486,6 @@ import nav from './NavMain'
           params.append('username',name);
           Axios.post('http://127.0.0.1:80/heatphp/welcome/find_user_information',params).then((res)=>{
             if(res){     
-              console.log(res.data);
               this.centerDialogVisible = true;
               this.sex = res.data[0].user_sex;
               this.balance_state = res.data[0].balance_state;
@@ -512,12 +502,13 @@ import nav from './NavMain'
               else {
                 this.balance_internet = "过户"
               }
-              // this.balance_internet = res.data[0].balance_internet;
               this.ruleForm2.username = res.data[0].user_name;
               this.ruleForm2.age = res.data[0].user_age;
               this.ruleForm2.telephone = res.data[0].user_telephone;
               this.ruleForm2.address = res.data[0].user_address;
               this.updateFlag = true;
+              this.istransfer = false;
+              this.isDemolition = true;
             }
         });
       },

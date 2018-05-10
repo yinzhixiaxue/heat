@@ -73,7 +73,6 @@ import nav from './NavMain'
     data() {
       return {
         updateFlag: false,
-        input: '',
         name: '你好',
         centerDialogVisible: false,
         tip: '',
@@ -172,7 +171,6 @@ import nav from './NavMain'
               var _this = this;
               this.tableData3 = res.data || [];
               if(res.data) {
-                console.log(res.data);
                 
               } else {
                 
@@ -197,10 +195,8 @@ import nav from './NavMain'
       },
       select() {
         var params = new URLSearchParams(); 
-          params.append('username',this.input);
           Axios.post('http://127.0.0.1:80/heatphp/welcome/find_blacklist',params).then((res)=>{
             if(res){     
-            	console.log(res.data);
               this.tableData3 = res.data || [];      
               var _this = this;
              

@@ -42,7 +42,6 @@
     },
     methods: {
       handleSelect(key, keyPath) {
-        console.log(key, keyPath);
       }
       ,
         toggleTab: function(tab) {
@@ -55,7 +54,6 @@
 	a {
 		display: inline-block;
 		text-decoration: none;
-		/*width: 100%;*/
 	}
   .main-content{
     height: 600px;

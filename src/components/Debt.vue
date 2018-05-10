@@ -46,7 +46,6 @@
             size="small">
             催缴费用
           </el-button>
-          <!-- <el-button type="text" size="small" @click.native.prevent="BackCharge(scope.$index, scope.row.tag)">退费</el-button> -->
         </template>
       </el-table-column>
     </el-table>
@@ -135,10 +134,6 @@ import Axios from 'axios';
          rows = '已发送催缴短信';
          this.tableData3[index].tag = rows
         },
-      // BackCharge(index, rows){
-      //   rows = '已退费';
-      //   this.tableData3[index].tag = rows
-      // },
       filterTag(value, row) {
         return row.tag === value;
       },

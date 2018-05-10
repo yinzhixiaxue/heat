@@ -5,7 +5,7 @@
       <div class="header-info">
         <div v-if="true">
           <span>{{name}}已登录</span>
-          <a>退出登陆</a>
+          <router-link to="/login" @click.native="layout">注销</router-link> 
         </div>
         <div v-else>
           <span>未登录</span>
